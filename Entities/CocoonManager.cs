@@ -4,13 +4,15 @@ using System;
 
 namespace Colozak.Entities
 {
-    public class CocoonManager
+    public class CocoonManager : IGameEntity
     {
         public CocoonManager()
         {
             for (int i = 0; i < Globals.MAX_ACTIVE_COCOONS; i++)
                 Globals.ActiveCocoons[i] = null;
         }
+
+        public void Update(GameTime gameTime) { }
 
         public void Draw(SpriteBatch spriteBatch) 
         {

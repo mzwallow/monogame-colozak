@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Colozak.Entities
 {
-    public class Cocoon
+    public class Cocoon : IGameEntity
     {
         public const int COCOON_WIDTH = 48;
         public const int COCOON_HEIGHT = 48;
@@ -25,8 +25,6 @@ namespace Colozak.Entities
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Logging
         }
 
         public void Draw(SpriteBatch spriteBatch)
