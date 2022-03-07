@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Colozak.Graphics
 {
@@ -24,8 +25,7 @@ namespace Colozak.Graphics
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            // spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width, Height), TintColor);
+            spriteBatch.Draw(Texture, position, new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), Width, Height), TintColor);
         }
-
     }
 }

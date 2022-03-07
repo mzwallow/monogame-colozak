@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Colozak.Entities
 {
-    public class Board
+    public class Board : IGameEntity
     {
         public const int NUM_TILE = 90;
 
@@ -22,6 +24,7 @@ namespace Colozak.Entities
                     for (x = 6*Globals.TILE_SIZE + Globals.TILE_SIZE/2; x < 14*Globals.TILE_SIZE; x += Globals.TILE_SIZE)
                     {
                         Grids[j] = new HexGrid(new Vector2(x, y));
+                        Grids[j].BoardIndex = j;
                         j++;
                     }
                 }
@@ -30,12 +33,17 @@ namespace Colozak.Entities
                     for (x = 7*Globals.TILE_SIZE; x < 13*Globals.TILE_SIZE + Globals.TILE_SIZE/2; x += Globals.TILE_SIZE)
                     {
                         Grids[j] = new HexGrid(new Vector2(x, y));
+                        Grids[j].BoardIndex = j;
                         j++;
                     }
                 }
                 i++;
             }
-        } 
+        }
+
+        public void Update(GameTime gameTime) { }
+
+        public void Draw(SpriteBatch spriteBatch) { }
 
         public void CreateMap(int[] number)
         {
@@ -43,9 +51,18 @@ namespace Colozak.Entities
             {
                 if (number[i] >= 0 && number[i] < 8)
                 {
-                    Globals.CocoonManager.SetCocoon(Globals.CocoonsTexture[number[i]], Grids[i].Position, i);
+                    Globals.CocoonManager.SetCocoonToBoard(Globals.CocoonManager.CocoonsTexture[number[i]], Grids[i].Position, i);
                     Grids[i].IsEmpty = false;
                 }
+            }
+        }
+
+        public void DropGrids()
+        {
+            foreach (HexGrid grid in Grids)
+            {
+                grid.Position.Y += Globals.TILE_SIZE - 6;
+                Globals.CocoonManager.ResetCocoonPosition();
             }
         }
     }
