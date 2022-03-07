@@ -31,13 +31,13 @@ namespace Colozak.States
 
       newGameButton.Click += NewGameButton_Click;
 
-      var loadGameButton = new Button(buttonTexture, buttonFont)
+      var OptionButton = new Button(buttonTexture, buttonFont)
       {
         Position = new Vector2(Globals.SCREEN_WIDTH/2 - 80, Globals.SCREEN_HEIGHT/2 - 20),
-        Text = "Load Game",
+        Text = "Option",
       };
 
-      loadGameButton.Click += LoadGameButton_Click;
+      OptionButton.Click += OptionButton_Click;
 
       var quitGameButton = new Button(buttonTexture, buttonFont)
       {
@@ -50,7 +50,7 @@ namespace Colozak.States
       _components = new List<Component>()
       {
         newGameButton,
-        loadGameButton,
+        OptionButton,
         quitGameButton,
       };
     }
@@ -65,9 +65,10 @@ namespace Colozak.States
       spriteBatch.End();
     }
 
-    private void LoadGameButton_Click(object sender, EventArgs e)
+
+    private void OptionButton_Click(object sender, EventArgs e)
     {
-      Console.WriteLine("Load Game");
+     // Console.WriteLine("Test");
     }
 
     private void NewGameButton_Click(object sender, EventArgs e)
