@@ -19,7 +19,7 @@ namespace Colozak.States
         private SoundEffect _bgm;
         private SoundEffectInstance _bgmInstance;
 
-        private Texture2D _bg;
+        private Texture2D _bg,_menu_bg;
 
         SpriteFont logo;
 
@@ -35,6 +35,7 @@ namespace Colozak.States
             /*var*/ buttonFont = _content.Load<SpriteFont>("Fonts/Text");
             logo = _content.Load<SpriteFont>("Fonts/Logo");
             _bg = _content.Load<Texture2D>("BG/bg");
+            _menu_bg = _content.Load<Texture2D>("BG/menu_bg");
             _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
             _bgmInstance = _bgm.CreateInstance();
             _bgmInstance.IsLooped = true;
@@ -97,8 +98,8 @@ namespace Colozak.States
             spriteBatch.Begin();
             if (!showOption)
             {
-                spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
-                spriteBatch.DrawString(logo, "COLOZAK", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("COLOZAK").X / 2, logo.MeasureString("COLOZAK").Y / 2), Color.White);
+                spriteBatch.Draw(_menu_bg, Vector2.Zero, Color.White);
+                //spriteBatch.DrawString(logo, "COLOZAK", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("COLOZAK").X / 2, logo.MeasureString("COLOZAK").Y / 2), Color.White);
                 foreach (var component in _menuComponents)
                     component.Draw(gameTime, spriteBatch);
 
@@ -106,7 +107,7 @@ namespace Colozak.States
             else
             {
                 spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
-                spriteBatch.DrawString(logo, "OPTION", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("OPTION").X / 2, logo.MeasureString("OPTION").Y / 2), Color.SkyBlue);
+                spriteBatch.DrawString(logo, "OPTION", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("OPTION").X / 2, logo.MeasureString("OPTION").Y / 2), Color.White);
                 foreach (var component in _optionComponents)
                     component.Draw(gameTime, spriteBatch);
 
