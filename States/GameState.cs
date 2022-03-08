@@ -74,14 +74,14 @@ namespace Colozak.States
             _frameTexture = content.Load<Texture2D>("Games/frame");
 
             // Load cocoon textures
-            Globals.CocoonManager.CocoonsTexture[0] = content.Load<Texture2D>("cocoon_blue");
-            Globals.CocoonManager.CocoonsTexture[1] = content.Load<Texture2D>("cocoon_green");
+            Globals.CocoonManager.CocoonsTexture[0] = content.Load<Texture2D>("Games/cocoon_blue");
+            Globals.CocoonManager.CocoonsTexture[1] = content.Load<Texture2D>("Games/cocoon_green");
             Globals.CocoonManager.CocoonsTexture[2] = content.Load<Texture2D>("cocoon");
             Globals.CocoonManager.CocoonsTexture[3] = content.Load<Texture2D>("cocoon");
-            Globals.CocoonManager.CocoonsTexture[4] = content.Load<Texture2D>("cocoon_red");
-            Globals.CocoonManager.CocoonsTexture[5] = content.Load<Texture2D>("cocoon_orange");
-            Globals.CocoonManager.CocoonsTexture[6] = content.Load<Texture2D>("cocoon_yellow");
-            Globals.CocoonManager.CocoonsTexture[7] = content.Load<Texture2D>("cocoon_violet");
+            Globals.CocoonManager.CocoonsTexture[4] = content.Load<Texture2D>("Games/cocoon_red");
+            Globals.CocoonManager.CocoonsTexture[5] = content.Load<Texture2D>("Games/cocoon_orange");
+            Globals.CocoonManager.CocoonsTexture[6] = content.Load<Texture2D>("Games/cocoon_yellow");
+            Globals.CocoonManager.CocoonsTexture[7] = content.Load<Texture2D>("Games/cocoon_violet");
 
             // Create map
             Globals.BoardManager.CreateMap(_map);
