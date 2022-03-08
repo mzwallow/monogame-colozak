@@ -15,11 +15,8 @@ namespace Colozak
 
         public static int NUM_COCOONS { get; } = 8;
         public static int MAX_ACTIVE_COCOONS { get; } = 500;
-        public static CocoonManager CocoonManager;
 
         public static bool IsShooting { get; set; } = false;
-
-        public static Board BoardManager;
 
         public static float Timer { get; set; } = 0f;
         public static bool CeilingCanDrop { get; set; } = false;
@@ -27,8 +24,13 @@ namespace Colozak
         public static MouseState CurrentMouseState { get; set; }
         public static MouseState PreviousMouseState { get; set; }
 
-        public static WallAndCeilingManager WallAndCeilingManager;
-
         public static GameState CurrentGameState { get; set; } = GameState.Menu;
+
+        // Manager
+        public static Board BoardManager;
+        public static WallAndCeilingManager WallAndCeilingManager;
+        public static CocoonManager CocoonManager;
+
+
     }
 }

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using Colozak.Controls;
 
 namespace Colozak.States
@@ -16,10 +13,8 @@ namespace Colozak.States
 
         private Texture2D _bg;
 
-        //Button backButton;
-
         public MenuState(Colozak game, GraphicsDevice graphicsDevice, ContentManager content)
-          : base(game, graphicsDevice, content)
+            : base(game, graphicsDevice, content)
         {
             var buttonTexture = _content.Load<Texture2D>("Controls/Button");
             var buttonFont = _content.Load<SpriteFont>("Fonts/Font");
@@ -73,7 +68,7 @@ namespace Colozak.States
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
 
-            
+
 
             spriteBatch.End();
         }
