@@ -10,7 +10,6 @@ namespace Colozak.States
         private Gun _gun;
 
         private SpriteFont _font;
-        private Texture2D _rect;
         private Texture2D _gunTexture, _wallTexture, _ceilingTexture, _frameTexture, _bg, _loseLineTexture;
 
         private int[] _map
