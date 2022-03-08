@@ -13,6 +13,7 @@ namespace Colozak.States
     public class OptionState : State
     {
         SpriteFont _text;
+        private Texture2D _bg;
 
         private List<Component> _components;
         //Button backButton;
@@ -23,6 +24,7 @@ namespace Colozak.States
             var buttonTexture = _content.Load<Texture2D>("Controls/Button");
             var buttonFont = _content.Load<SpriteFont>("Fonts/Font");
             _text = content.Load<SpriteFont>("Fonts/Font");
+            _bg = _content.Load<Texture2D>("BG/bg");
 
             var backButton = new Button(buttonTexture, buttonFont)
             {
@@ -40,13 +42,13 @@ namespace Colozak.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            _graphicsDevice.Clear(Color.IndianRed);
             spriteBatch.Begin();
+            spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
 
 
             spriteBatch.DrawString(_text, "Option WEI!!!!", new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 - 90), Color.Black);
 
-             foreach (var component in _components)
+            foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
@@ -60,6 +62,8 @@ namespace Colozak.States
 
         public override void Update(GameTime gameTime)
         {
+             foreach (var component in _components)
+                component.Update(gameTime);
 
         }
 
@@ -68,5 +72,7 @@ namespace Colozak.States
             // Back To Menu
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
         }
+
+
     }
 }

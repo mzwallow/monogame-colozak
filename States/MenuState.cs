@@ -4,12 +4,18 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Colozak.Controls;
+using Microsoft.Xna. Framework.Audio;
+using Microsoft.Xna. Framework.Media;
+
 
 namespace Colozak.States
 {
     public class MenuState : State
     {
         private List<Component> _components;
+
+        private SoundEffect _bgm;
+        private SoundEffectInstance _bgmInstance;
 
         private Texture2D _bg;
 
@@ -19,6 +25,10 @@ namespace Colozak.States
             var buttonTexture = _content.Load<Texture2D>("Controls/Button");
             var buttonFont = _content.Load<SpriteFont>("Fonts/Font");
             _bg = _content.Load<Texture2D>("BG/bg");
+            _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
+            _bgmInstance = _bgm.CreateInstance();
+            _bgmInstance.IsLooped =true;
+
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
@@ -44,21 +54,15 @@ namespace Colozak.States
 
             quitGameButton.Click += QuitGameButton_Click;
 
-            var backButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 + 120),
-                Text = "Back To Menu",
-            };
-            //quitGameButton.Click += QuitGameButton_Click;
-            backButton.Click += backButton_Click;
-
             _components = new List<Component>()
             {
               newGameButton,
               OptionButton,
               quitGameButton,
-              backButton
             };
+
+            _bgmInstance.Play();
+            _bgmInstance.Volume = 0.3f;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -72,6 +76,7 @@ namespace Colozak.States
 
             spriteBatch.End();
         }
+
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
@@ -93,13 +98,7 @@ namespace Colozak.States
             foreach (var component in _components)
                 component.Update(gameTime);
         }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            // Back To Menu
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-            Console.WriteLine("Menu");
-        }
+     
 
         private void QuitGameButton_Click(object sender, EventArgs e)
         {

@@ -67,11 +67,16 @@ namespace Colozak
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Aquamarine);
-            
+
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
             _currentState.Draw(gameTime, _spriteBatch);
 
+           
             base.Draw(gameTime);
         }
+
+
+
     }
 }

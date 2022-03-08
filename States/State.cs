@@ -28,3 +28,4 @@ namespace Colozak.States
         public abstract void Update(GameTime gameTime);
     }
 }
+
