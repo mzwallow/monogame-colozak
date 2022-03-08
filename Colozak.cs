@@ -8,10 +8,6 @@ namespace Colozak
 {
     public class Colozak : Game
     {
-        // new Vector2(Globals.TILE_SIZE * 10, (Globals.TILE_SIZE * 12) + (Globals.TILE_SIZE / 2))
-        private const int GUN_POS_X = 480;
-        private const int GUN_POS_Y = 600;
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -24,29 +20,13 @@ namespace Colozak
         {
             get
             {
-                return new int[90]
-                {
-                    0, 0, 0, 0, 0, 0, 9, 9,
-                    0, 0, 1, 5, 7, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9, 9,
-                    9, 9, 9, 9, 9, 9, 9
-                };
-
                 // return new int[90]
                 // {
-                //     0, 0, 1, 1, 1, 6, 7, 4,
-                //     7, 0, 1, 5, 7, 7, 4,
-                //     0, 6, 1, 6, 7, 1, 0, 0,
-                //     1, 5, 4, 4, 7, 7, 0,
-                //     1, 5, 5, 7, 6, 0, 7, 7,
+                //    7, 7, 7, 7, 7, 7, 7, 7,
+                //     7, 7, 7, 7, 7, 7, 7,
+                //     7, 7, 7, 7, 7, 7, 7, 7,
+                //     7, 7, 7, 7, 7, 7, 7,
+                //     9, 9, 9, 9, 9, 9, 9, 9,
                 //     9, 9, 9, 9, 9, 9, 9,
                 //     9, 9, 9, 9, 9, 9, 9, 9,
                 //     9, 9, 9, 9, 9, 9, 9,
@@ -55,6 +35,22 @@ namespace Colozak
                 //     9, 9, 9, 9, 9, 9, 9, 9,
                 //     9, 9, 9, 9, 9, 9, 9
                 // };
+
+                return new int[90]
+                {
+                    0, 0, 1, 1, 1, 6, 7, 4,
+                    7, 0, 1, 5, 7, 7, 4,
+                    0, 6, 1, 6, 7, 1, 0, 0,
+                    1, 5, 4, 4, 7, 7, 0,
+                    1, 5, 5, 7, 6, 0, 7, 7,
+                    9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9, 9,
+                    9, 9, 9, 9, 9, 9, 9
+                };
             }
         }
 
@@ -108,9 +104,9 @@ namespace Colozak
             // Create map
             Globals.Board.CreateMap(_map);
 
-            // Load gun texture
+            // Load gun
             _gunTexture = this.Content.Load<Texture2D>("gun");
-            _gun = new Gun(_gunTexture, new Vector2(GUN_POS_X, GUN_POS_Y));
+            _gun = new Gun(_gunTexture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -145,12 +141,15 @@ namespace Colozak
             {
                 Globals.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (Globals.Timer >= 3f)
+                if (Globals.Timer >= 15f)
                 {
                     Globals.CeilingCanDrop = true;
                     Globals.Timer = 0f;
                 }
             }
+
+            if (Globals.Board.CheckWin())
+                this.Exit();
 
             base.Update(gameTime);
         }
@@ -203,14 +202,16 @@ namespace Colozak
             // Globals.CocoonManager.Draw(_spriteBatch);
             foreach (Cocoon c in Globals.CocoonManager.ActiveCocoons)
             {
-                if (c != null)
-                    c.Draw(_spriteBatch);
+                if (c is null)
+                    continue;
+
+                c.Draw(_spriteBatch);
             }
 
             // Debug
-            _spriteBatch.DrawString(_font, "Gun state: " + _gun.CurrentState, new Vector2(10, 10), Color.Blue);
+            _spriteBatch.DrawString(_font, "Gun is shooting: " + Globals.IsShooting, new Vector2(10, 10), Color.Blue);
             _spriteBatch.DrawString(_font, "X: " + Globals.CurrentMouseState.X + " Y: " + Globals.CurrentMouseState.Y, new Vector2(10, 30), Color.Green);
-            _spriteBatch.DrawString(_font, "Last cocoon: " + Globals.CocoonManager.LastCocoon,  new Vector2(10, 50), Color.Blue);
+            _spriteBatch.DrawString(_font, "Last cocoon: " + Globals.CocoonManager.LastCocoonIndex,  new Vector2(10, 50), Color.Blue);
 
             _spriteBatch.End();
 

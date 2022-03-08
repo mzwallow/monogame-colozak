@@ -1,8 +1,8 @@
-namespace Colozak.Entities
-{
-    public enum GunState
-    {
-        Aiming,
-        Shooting
-    }
-}
+// namespace Colozak.Entities
+// {
+//     public enum GunState
+//     {
+//         Aiming,
+//         Shooting
+//     }
+// }

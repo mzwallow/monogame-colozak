@@ -7,13 +7,14 @@ namespace Colozak.Entities
     {
         public Vector2 Position;
         
-        public bool IsEmpty { get; set; } = true;
+        public bool IsEmpty { get; set; }
 
         public int BoardIndex { get; set; }
 
         public HexGrid(Vector2 position) 
         {
             Position = position;
+            IsEmpty = true;
         }
 
         public void Update(GameTime gameTime) { }

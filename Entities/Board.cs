@@ -65,5 +65,16 @@ namespace Colozak.Entities
                 Globals.CocoonManager.ResetCocoonPosition();
             }
         }
+
+        public bool CheckWin()
+        {
+            foreach (HexGrid grid in Grids)
+            {
+                if (!grid.IsEmpty)
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -8,22 +8,25 @@ namespace Colozak.Entities
 {
     public class Gun : IGameEntity
     {
-        public GunState CurrentState;
+        private const int GUN_POS_X = 480;
+        private const int GUN_POS_Y = 600;
 
-        private int _rand;
+        // public GunState CurrentState;
+
+        // private int _rand;
 
         private Texture2D _texture, _cocoonTexture;
         private Vector2 _position;
         private float _rotation;
 
-        public Gun(Texture2D texture, Vector2 position)
+        public Gun(Texture2D texture)
         {
             _texture = texture;
-            _position = position;
+            _position = new Vector2(GUN_POS_X, GUN_POS_Y);
 
             _cocoonTexture = GetRandomTexture();
 
-            CurrentState = GunState.Aiming;
+            Globals.IsShooting = false;
         }
 
         public void Update(GameTime gameTime)
@@ -35,16 +38,15 @@ namespace Colozak.Entities
                     Globals.CurrentMouseState.X - _position.X
                 )  + (float)(Math.PI * 0.5f);
 
-                if (CurrentState == GunState.Aiming &&
+                if (!Globals.IsShooting && 
+                    !Globals.CeilingCanDrop &&
                     Globals.CurrentMouseState.LeftButton == ButtonState.Pressed &&
                     Globals.PreviousMouseState.LeftButton == ButtonState.Released)
                 {
-                    CurrentState = GunState.Shooting;
+                    Globals.IsShooting = true;
 
                     Globals.CocoonManager.AddCocoonToGun(_cocoonTexture, _position, _rotation);
                     _cocoonTexture = GetRandomTexture();
-
-                    CurrentState = GunState.Aiming;
                 }
             }
         }
@@ -63,17 +65,18 @@ namespace Colozak.Entities
                 0f
             );
 
-            if (CurrentState == GunState.Aiming)
+            if (!Globals.IsShooting && !Globals.CeilingCanDrop)
                 spriteBatch.Draw(_cocoonTexture, new Vector2(456, 576), Color.White);
         }
 
         public Texture2D GetRandomTexture()
         {
             bool found = false;
+            int _rand = 0;
             while (!found)
             {
-                _rand = new Random().Next(7);
-                for (int i = 0; i < Globals.CocoonManager.LastCocoon; i++)
+                _rand = new Random().Next(8);
+                for (int i = 0; i < Globals.CocoonManager.LastCocoonIndex; i++)
                 {
                     if (Globals.CocoonManager.ActiveCocoons[i] == null)
                         continue;

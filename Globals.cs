@@ -14,8 +14,10 @@ namespace Colozak
         public static int NUM_TILE { get; } = 90; 
 
         public static int NUM_COCOONS { get; } = 8;
-        public static int MAX_ACTIVE_COCOONS { get; } = 200;
+        public static int MAX_ACTIVE_COCOONS { get; } = 500;
         public static CocoonManager CocoonManager;
+
+        public static bool IsShooting { get; set; } = false;
 
         public static Board Board;
 
@@ -27,23 +29,6 @@ namespace Colozak
 
         public static WallAndCeilingManager WallAndCeilingManager;
 
-
-        // public static void Initialize()
-        // {
-        //     SCREEN_WIDTH = 960;
-        //     SCREEN_HEIGHT = 720;
-        //     TILE_SIZE = 48;
-
-        //     MAX_ACTIVE_COCOONS = 90;
-        //     LastCocoon = 0;
-        //     ActiveCocoons = new Cocoon[MAX_ACTIVE_COCOONS];
-        //     CocoonManager = new CocoonManager();
-        //     CocoonsTexture = new Texture2D[8];
-
-        //     Board = new Board();
-
-        //     // Debug
-        //     Debug.WriteLine("Globals Ininitialized");
-        // }
+        public static GameState CurrentGameState { get; set; } = GameState.Menu;
     }
 }
