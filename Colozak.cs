@@ -9,7 +9,6 @@ namespace Colozak
 {
     public class Colozak : Game
     {
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 

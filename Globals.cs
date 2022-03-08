@@ -24,13 +24,9 @@ namespace Colozak
         public static MouseState CurrentMouseState { get; set; }
         public static MouseState PreviousMouseState { get; set; }
 
-        public static GameState CurrentGameState { get; set; } = GameState.Menu;
-
         // Manager
         public static Board BoardManager;
         public static WallAndCeilingManager WallAndCeilingManager;
         public static CocoonManager CocoonManager;
-
-
     }
 }
