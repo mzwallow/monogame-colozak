@@ -13,6 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
+<<<<<<< HEAD
 #begin BG/bg.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -50,3 +51,5 @@
 /processorParam:Quality=Best
 /build:Sound/BackgroundMusic.mp3
 
+=======
+>>>>>>> 887e17ea0078aa4719670c54d5cca5176f284257
