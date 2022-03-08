@@ -53,7 +53,7 @@ namespace Colozak.States
         public GameState(Colozak game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
         {
-            _font = content.Load<SpriteFont>("Fonts/JetBrainsMono");
+            _font = content.Load<SpriteFont>("Fonts/Text");
             _rect = new Texture2D(graphicsDevice, Globals.TILE_SIZE, Globals.TILE_SIZE);
             Color[] data = new Color[Globals.TILE_SIZE * Globals.TILE_SIZE];
             for (int i = 0; i < data.Length; i++)
