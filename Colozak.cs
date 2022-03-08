@@ -67,7 +67,7 @@ namespace Colozak
             _graphics.PreferredBackBufferHeight = Globals.SCREEN_HEIGHT;
             _graphics.ApplyChanges();
 
-            Globals.Board = new Board();
+            Globals.BoardManager = new Board();
             // Globals.CocoonsTexture = new Texture2D[8];
             // Globals.ActiveCocoons = new Cocoon[Globals.MAX_ACTIVE_COCOONS];
             Globals.CocoonManager = new CocoonManager();
@@ -102,7 +102,7 @@ namespace Colozak
             Globals.CocoonManager.CocoonsTexture[7] = this.Content.Load<Texture2D>("cocoon_violet");
 
             // Create map
-            Globals.Board.CreateMap(_map);
+            Globals.BoardManager.CreateMap(_map);
 
             // Load gun
             _gunTexture = this.Content.Load<Texture2D>("gun");
@@ -125,13 +125,13 @@ namespace Colozak
             }
 
             Globals.WallAndCeilingManager.Update(gameTime);
-            Globals.Board.Update(gameTime);
+            Globals.BoardManager.Update(gameTime);
 
             _gun.Update(gameTime);
 
             if (Globals.CeilingCanDrop)
             {
-                Globals.Board.DropGrids();
+                Globals.BoardManager.DropGrids();
                 Globals.WallAndCeilingManager.Ceiling.DropCeiling();
 
                 Globals.CeilingCanDrop = false;
@@ -148,7 +148,7 @@ namespace Colozak
                 }
             }
 
-            if (Globals.Board.CheckWin())
+            if (Globals.BoardManager.CheckWin())
                 this.Exit();
 
             base.Update(gameTime);

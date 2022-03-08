@@ -56,7 +56,7 @@ namespace Colozak.Entities
                 if (c == null)
                     continue;
                 
-                c.Position = Globals.Board.Grids[c.BoardIndex].Position;
+                c.Position = Globals.BoardManager.Grids[c.BoardIndex].Position;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Colozak.Entities
             float _min = 999;
             int _boardIndex = 0;
 
-            foreach (HexGrid grid in Globals.Board.Grids)
+            foreach (HexGrid grid in Globals.BoardManager.Grids)
             {
                 if (grid.IsEmpty)
                 {
@@ -82,9 +82,9 @@ namespace Colozak.Entities
 
             cocoon.IsMoving = false;
             cocoon.BoardIndex = _boardIndex;
-            cocoon.Position = Globals.Board.Grids[_boardIndex].Position;
+            cocoon.Position = Globals.BoardManager.Grids[_boardIndex].Position;
 
-            Globals.Board.Grids[_boardIndex].IsEmpty = false;
+            Globals.BoardManager.Grids[_boardIndex].IsEmpty = false;
 
             Globals.IsShooting = false;
         }

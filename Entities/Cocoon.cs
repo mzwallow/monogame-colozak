@@ -117,7 +117,7 @@ namespace Colozak.Entities
                         foreach (Cocoon _c in Globals.CocoonManager.ToDestroyCocoons)
                         {
                             _c.ToDestroy = true;
-                            Globals.Board.Grids[_c.BoardIndex].IsEmpty = true;
+                            Globals.BoardManager.Grids[_c.BoardIndex].IsEmpty = true;
                         }
                     }
 
@@ -167,7 +167,7 @@ namespace Colozak.Entities
                             if (!Globals.CocoonManager.ActiveCocoons[i].IsChecked)
                             {
                                 Globals.CocoonManager.ActiveCocoons[i].ToDestroy = true;
-                                Globals.Board.Grids[Globals.CocoonManager.ActiveCocoons[i].BoardIndex].IsEmpty = true;
+                                Globals.BoardManager.Grids[Globals.CocoonManager.ActiveCocoons[i].BoardIndex].IsEmpty = true;
                                 Globals.CocoonManager.ActiveCocoons[i] = null;
                             }
                         }

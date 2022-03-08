@@ -19,7 +19,7 @@ namespace Colozak
 
         public static bool IsShooting { get; set; } = false;
 
-        public static Board Board;
+        public static Board BoardManager;
 
         public static float Timer { get; set; } = 0f;
         public static bool CeilingCanDrop { get; set; } = false;
