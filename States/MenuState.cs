@@ -38,12 +38,15 @@ namespace Colozak.States
             _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
             _bgmInstance = _bgm.CreateInstance();
             _bgmInstance.IsLooped = true;
+<<<<<<< HEAD
             VolumeAdjust = 0.01f;
             showOption = false;
             
 
             _bgmInstance.Play();
             _bgmInstance.Volume *= VolumeAdjust;
+=======
+>>>>>>> 36a4d638ae42bb72885d0fcdaae27cf7d319ca4c
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
