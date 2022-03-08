@@ -42,5 +42,13 @@ namespace Colozak.States
     {
 
     }
+    public override void LoadContent(){
+          
+
+    }
+    public override void UnloadContent(){
+          
+
+    }
   }
 }

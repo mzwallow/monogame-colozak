@@ -14,7 +14,7 @@ namespace Colozak
 
         private State _nextState;
 
-       
+
 
         public void ChangeState(State state)
         {
@@ -41,7 +41,16 @@ namespace Colozak
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
-           
+
+
+            // TODO: use this.Content to load your game content here
+        }
+
+        protected override void UnloadContent()
+        {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -68,12 +77,15 @@ namespace Colozak
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
-                _currentState.Draw(gameTime, _spriteBatch);
-                
-               
+
+            _currentState.Draw(gameTime, _spriteBatch);
+
+
 
             base.Draw(gameTime);
         }
+
+
+
     }
 }
