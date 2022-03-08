@@ -3,14 +3,25 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Colozak.Entities;
+using Colozak.States;
 
 namespace Colozak
 {
     public class Colozak : Game
     {
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private State _currentState;
+
+        private State _nextState;
+
+        public void ChangeState(State state)
+        {
+            _nextState = state;
+        }
+        
         private Gun _gun;
 
         private SpriteFont _font;
@@ -68,8 +79,6 @@ namespace Colozak
             _graphics.ApplyChanges();
 
             Globals.BoardManager = new Board();
-            // Globals.CocoonsTexture = new Texture2D[8];
-            // Globals.ActiveCocoons = new Cocoon[Globals.MAX_ACTIVE_COCOONS];
             Globals.CocoonManager = new CocoonManager();
 
             base.Initialize();
@@ -78,6 +87,8 @@ namespace Colozak
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
+           
 
             _font = this.Content.Load<SpriteFont>("Fonts/JetBrainsMono");
             _rect = new Texture2D(_graphics.GraphicsDevice, Globals.TILE_SIZE, Globals.TILE_SIZE);
@@ -110,6 +121,7 @@ namespace Colozak
         }
 
         protected override void Update(GameTime gameTime)
+
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -151,12 +163,22 @@ namespace Colozak
             if (Globals.BoardManager.CheckWin())
                 this.Exit();
 
+            if (_nextState != null)
+            {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+            _currentState.Update(gameTime);
+            _currentState.PostUpdate(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Aquamarine);
+            
+            _currentState.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.Begin();
 
