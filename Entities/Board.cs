@@ -76,5 +76,19 @@ namespace Colozak.Entities
 
             return true;
         }
+
+        public bool CheckLose()
+        {
+            foreach (Cocoon c in Globals.CocoonManager.ActiveCocoons)
+            {
+                if (c is null)
+                    continue;
+                
+                if (c.CollisionBox.Intersects(Globals.ColliderManager.LoseLine.CollisionBox) && !c.IsMoving)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

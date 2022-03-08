@@ -93,9 +93,10 @@ namespace Colozak.Entities
         private void CheckCollisions()
         {
             Circle _cocoonCollisionBox = this.CollisionBox;
-            Rectangle _wallLeftCollisionBox = Globals.WallAndCeilingManager.WallLeft.CollisionBox;
-            Rectangle _wallRightCollisionBox = Globals.WallAndCeilingManager.WallRight.CollisionBox;
-            Rectangle _ceilingCollisionBox = Globals.WallAndCeilingManager.Ceiling.CollisionBox;
+            Rectangle _wallLeftCollisionBox = Globals.ColliderManager.WallLeft.CollisionBox;
+            Rectangle _wallRightCollisionBox = Globals.ColliderManager.WallRight.CollisionBox;
+            Rectangle _ceilingCollisionBox = Globals.ColliderManager.Ceiling.CollisionBox;
+            Rectangle _loseLineCollisionBox = Globals.ColliderManager.LoseLine.CollisionBox;
                 
             // Check if hit wall then change shooting cocoon's direction
             if (_cocoonCollisionBox.Intersects(_wallLeftCollisionBox) || _cocoonCollisionBox.Intersects(_wallRightCollisionBox))

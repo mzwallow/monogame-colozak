@@ -3,30 +3,28 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Colozak.Entities
 {
-    public class WallAndCeilingManager : IGameEntity
+    public class ColliderManager : IGameEntity
     {
         public Wall WallLeft, WallRight;
         public Ceiling Ceiling;
+        public LoseLine LoseLine;
 
-        public WallAndCeilingManager(Texture2D wallTexture, Texture2D ceilingTexture)
+        public ColliderManager(Texture2D wallTexture, Texture2D ceilingTexture, Texture2D loseLineTexture)
         {
             WallLeft = new WallLeft(wallTexture);
             WallRight = new WallRight(wallTexture);
             Ceiling = new Ceiling(ceilingTexture);
+            LoseLine = new LoseLine(loseLineTexture);
         }
 
-        public void Update(GameTime gameTime)
-        {
-            WallLeft.Update(gameTime);
-            WallRight.Update(gameTime);
-            Ceiling.Update(gameTime);
-        }
+        public void Update(GameTime gameTime) { }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             WallLeft.Draw(spriteBatch);
             WallRight.Draw(spriteBatch);
             Ceiling.Draw(spriteBatch);
+            LoseLine.Draw(spriteBatch);
         }
     }
 }

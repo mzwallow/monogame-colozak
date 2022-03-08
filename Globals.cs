@@ -26,7 +26,7 @@ namespace Colozak
 
         // Manager
         public static Board BoardManager;
-        public static WallAndCeilingManager WallAndCeilingManager;
+        public static ColliderManager ColliderManager;
         public static CocoonManager CocoonManager;
     }
 }

@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Colozak.Controls;
-using Microsoft.Xna. Framework.Audio;
-using Microsoft.Xna. Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 
 namespace Colozak.States
@@ -27,8 +27,7 @@ namespace Colozak.States
             _bg = _content.Load<Texture2D>("BG/bg");
             _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
             _bgmInstance = _bgm.CreateInstance();
-            _bgmInstance.IsLooped =true;
-
+            _bgmInstance.IsLooped = true;
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
@@ -98,7 +97,7 @@ namespace Colozak.States
             foreach (var component in _components)
                 component.Update(gameTime);
         }
-     
+
 
         private void QuitGameButton_Click(object sender, EventArgs e)
         {

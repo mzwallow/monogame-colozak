@@ -10,7 +10,8 @@ namespace Colozak.States
         private Gun _gun;
 
         private SpriteFont _font;
-        private Texture2D _rect, _gunTexture, _wallTexture, _ceilingTexture;
+        private Texture2D _rect;
+        private Texture2D _gunTexture, _wallTexture, _ceilingTexture, _frameTexture, _bg, _loseLineTexture;
 
         private int[] _map
         {
@@ -54,16 +55,23 @@ namespace Colozak.States
             : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Fonts/Text");
-            _rect = new Texture2D(graphicsDevice, Globals.TILE_SIZE, Globals.TILE_SIZE);
-            Color[] data = new Color[Globals.TILE_SIZE * Globals.TILE_SIZE];
-            for (int i = 0; i < data.Length; i++)
-                data[i] = Color.YellowGreen;
-            _rect.SetData<Color>(data);
+            // _rect = new Texture2D(graphicsDevice, Globals.TILE_SIZE, Globals.TILE_SIZE);
+            // Color[] data = new Color[Globals.TILE_SIZE * Globals.TILE_SIZE];
+            // for (int i = 0; i < data.Length; i++)
+            //     data[i] = Color.YellowGreen;
+            // _rect.SetData<Color>(data);
 
             // Load wall and ceiling textures
             _wallTexture = content.Load<Texture2D>("wall");
             _ceilingTexture = content.Load<Texture2D>("ceiling");
-            Globals.WallAndCeilingManager = new WallAndCeilingManager(_wallTexture, _ceilingTexture);
+            _loseLineTexture = content.Load<Texture2D>("Games/lose_line");
+            Globals.ColliderManager = new ColliderManager(_wallTexture, _ceilingTexture, _loseLineTexture);
+
+            // Load background texture
+            _bg = _content.Load<Texture2D>("BG/bg");
+
+            // Load main game frame texture
+            _frameTexture = content.Load<Texture2D>("Games/frame");
 
             // Load cocoon textures
             Globals.CocoonManager.CocoonsTexture[0] = content.Load<Texture2D>("cocoon_blue");
@@ -92,7 +100,7 @@ namespace Colozak.States
                     c.Update(gameTime);
             }
 
-            Globals.WallAndCeilingManager.Update(gameTime);
+            Globals.ColliderManager.Update(gameTime);
             Globals.BoardManager.Update(gameTime);
 
             _gun.Update(gameTime);
@@ -100,7 +108,7 @@ namespace Colozak.States
             if (Globals.CeilingCanDrop)
             {
                 Globals.BoardManager.DropGrids();
-                Globals.WallAndCeilingManager.Ceiling.DropCeiling();
+                Globals.ColliderManager.Ceiling.DropCeiling();
 
                 Globals.CeilingCanDrop = false;
             }
@@ -118,6 +126,9 @@ namespace Colozak.States
 
             if (Globals.BoardManager.CheckWin())
                 _game.Exit();
+
+            if (Globals.BoardManager.CheckLose())
+                _game.Exit();
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -132,39 +143,45 @@ namespace Colozak.States
             spriteBatch.Begin();
 
             // Draw play area
-            for (int i = 0; i < 12; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if ((i+j) % 2 == 0)
-                        spriteBatch.Draw(
-                            _rect, 
-                            new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)), 
-                            null, 
-                            Color.Black, 
-                            0f, 
-                            Vector2.Zero, 
-                            1f, 
-                            SpriteEffects.None, 
-                            0f
-                        );
-                    else
-                        spriteBatch.Draw(
-                            _rect, 
-                            new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)), 
-                            null, 
-                            Color.AliceBlue, 
-                            0f, 
-                            Vector2.Zero, 
-                            1f, 
-                            SpriteEffects.None, 
-                            0f
-                        );
-                }
-            }
+            // for (int i = 0; i < 12; i++)
+            // {
+            //     for (int j = 0; j < 8; j++)
+            //     {
+            //         if ((i+j) % 2 == 0)
+            //             spriteBatch.Draw(
+            //                 _rect, 
+            //                 new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)), 
+            //                 null, 
+            //                 Color.Black, 
+            //                 0f, 
+            //                 Vector2.Zero, 
+            //                 1f, 
+            //                 SpriteEffects.None, 
+            //                 0f
+            //             );
+            //         else
+            //             spriteBatch.Draw(
+            //                 _rect,
+            //                 new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)),
+            //                 null,
+            //                 Color.AliceBlue,
+            //                 0f,
+            //                 Vector2.Zero,
+            //                 1f,
+            //                 SpriteEffects.None,
+            //                 0f
+            //             );
+            //     }
+            // }
+
+            // Draw background
+            spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
 
             // Draw walls and ceiling
-            Globals.WallAndCeilingManager.Draw(spriteBatch);
+            Globals.ColliderManager.Draw(spriteBatch);
+
+            // Draw a frame
+            spriteBatch.Draw(_frameTexture, Vector2.Zero, Color.White);
 
             // Draw a gun
             _gun.Draw(spriteBatch);
