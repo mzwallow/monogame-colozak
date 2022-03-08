@@ -38,15 +38,12 @@ namespace Colozak.States
             _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
             _bgmInstance = _bgm.CreateInstance();
             _bgmInstance.IsLooped = true;
-<<<<<<< HEAD
             VolumeAdjust = 0.01f;
             showOption = false;
             
 
             _bgmInstance.Play();
             _bgmInstance.Volume *= VolumeAdjust;
-=======
->>>>>>> 36a4d638ae42bb72885d0fcdaae27cf7d319ca4c
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
@@ -109,7 +106,7 @@ namespace Colozak.States
             else
             {
                 spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
-                spriteBatch.DrawString(logo, "OPTION", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("OPTION").X / 2, logo.MeasureString("OPTION").Y / 2), Color.White);
+                spriteBatch.DrawString(logo, "OPTION", new Vector2(Globals.SCREEN_WIDTH / 2 - logo.MeasureString("OPTION").X / 2, logo.MeasureString("OPTION").Y / 2), Color.SkyBlue);
                 foreach (var component in _optionComponents)
                     component.Draw(gameTime, spriteBatch);
 
