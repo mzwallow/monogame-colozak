@@ -73,12 +73,6 @@ namespace Colozak.States
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
         }
 
-         public override void LoadContent(){
-          
-        }
-        public override void UnloadContent(){
-          
 
-        }
     }
 }
