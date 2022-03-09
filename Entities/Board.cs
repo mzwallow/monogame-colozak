@@ -41,6 +41,37 @@ namespace Colozak.Entities
             }
         }
 
+        public void Reset()
+        {
+            Grids = new HexGrid[NUM_TILE];
+
+            int x, y;
+            int i = 0;
+            int j = 0;
+            for (y = 2*Globals.TILE_SIZE + Globals.TILE_SIZE/2; j < NUM_TILE; y += Globals.TILE_SIZE-6)
+            {
+                if (i % 2 == 0)
+                {
+                    for (x = 6*Globals.TILE_SIZE + Globals.TILE_SIZE/2; x < 14*Globals.TILE_SIZE; x += Globals.TILE_SIZE)
+                    {
+                        Grids[j] = new HexGrid(new Vector2(x, y));
+                        Grids[j].BoardIndex = j;
+                        j++;
+                    }
+                }
+                else 
+                {
+                    for (x = 7*Globals.TILE_SIZE; x < 13*Globals.TILE_SIZE + Globals.TILE_SIZE/2; x += Globals.TILE_SIZE)
+                    {
+                        Grids[j] = new HexGrid(new Vector2(x, y));
+                        Grids[j].BoardIndex = j;
+                        j++;
+                    }
+                }
+                i++;
+            }
+        }
+
         public void Update(GameTime gameTime) { }
 
         public void Draw(SpriteBatch spriteBatch) { }

@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:BG/bg.png
 
+#begin BG/lose.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:BG/lose.png
+
 #begin BG/menu_bg.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,6 +60,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:BG/option_bg2.png
+
+#begin BG/win.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:BG/win.png
 
 #begin ceiling.png
 /importer:TextureImporter
@@ -84,6 +108,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Controls/Button.png
+
+#begin Controls/Rectangle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Controls/Rectangle.png
 
 #begin Fonts/Arial.spritefont
 /importer:FontDescriptionImporter
@@ -185,6 +221,18 @@
 /processorParam:TextureFormat=Color
 /build:Games/cocoon_yellow.png
 
+#begin Games/fog.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Games/fog.png
+
 #begin Games/frame.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -221,6 +269,18 @@
 /processorParam:TextureFormat=Color
 /build:Games/starship.png
 
+#begin Games/thunder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Games/thunder.png
+
 #begin gun.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -238,6 +298,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/BackgroundMusic.mp3
+
+#begin Sound/bkgs.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/bkgs.mp3
 
 #begin wall.png
 /importer:TextureImporter

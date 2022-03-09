@@ -8,10 +8,10 @@ namespace Colozak.Entities
     public class Ceiling : IGameEntity
     {
         private const int CEILING_POS_X = 288;
-        private const int CEILING_POS_Y = 73;
+        private const int CEILING_POS_Y = -523;
 
         private const int TEXTURE_WIDTH = 384;
-        private const int TEXTURE_HEIGHT = 24;
+        private const int TEXTURE_HEIGHT = 620;
 
         private Texture2D _texture;
 
@@ -41,7 +41,7 @@ namespace Colozak.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, CollisionBox, Color.White);
+            spriteBatch.Draw(_texture, CollisionBox, Color.White);
         }
 
         public void DropCeiling()

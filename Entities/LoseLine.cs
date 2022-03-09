@@ -39,7 +39,7 @@ namespace Colozak.Entities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, CollisionBox, Color.White);
+            spriteBatch.Draw(_texture, CollisionBox, Color.White);
         }
     }
 }

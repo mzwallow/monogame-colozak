@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Colozak.Entities;
 
 namespace Colozak.States
@@ -8,6 +10,11 @@ namespace Colozak.States
     public class GameState : State
     {
         private Gun _gun;
+        
+        private SoundEffect _bkgs;
+        private SoundEffectInstance _bkgsInstance;
+
+        private bool _showLoseMenu, _showWinMenu;
 
         private SpriteFont _font;
         private Texture2D _gunTexture, _wallTexture, _ceilingTexture, _frameTexture, _bg, _loseLineTexture;
@@ -54,16 +61,20 @@ namespace Colozak.States
             : base(game, graphicsDevice, content)
         {
             _font = content.Load<SpriteFont>("Fonts/Text");
-            // _rect = new Texture2D(graphicsDevice, Globals.TILE_SIZE, Globals.TILE_SIZE);
-            // Color[] data = new Color[Globals.TILE_SIZE * Globals.TILE_SIZE];
-            // for (int i = 0; i < data.Length; i++)
-            //     data[i] = Color.YellowGreen;
-            // _rect.SetData<Color>(data);
+
+            // sound bkg
+            _bkgs = content.Load<SoundEffect>("Sound/bkgs");
+            _bkgsInstance = _bkgs.CreateInstance();
+            _bkgsInstance.IsLooped = true;
+            _bkgsInstance.Play();
+            _bkgsInstance.Volume = 0.3f;
+            _showLoseMenu = false;
+            _showWinMenu = false;
 
             // Load wall and ceiling textures
             _wallTexture = content.Load<Texture2D>("wall");
-            _ceilingTexture = content.Load<Texture2D>("ceiling");
-            _loseLineTexture = content.Load<Texture2D>("Games/lose_line");
+            _ceilingTexture = content.Load<Texture2D>("Games/fog");
+            _loseLineTexture = content.Load<Texture2D>("Games/thunder");
             Globals.ColliderManager = new ColliderManager(_wallTexture, _ceilingTexture, _loseLineTexture);
 
             // Load background texture
@@ -88,6 +99,7 @@ namespace Colozak.States
             // Load gun
             _gunTexture = content.Load<Texture2D>("gun");
             _gun = new Gun(_gunTexture);
+
         }
 
         public override void Update(GameTime gameTime)
@@ -100,7 +112,7 @@ namespace Colozak.States
             }
 
             Globals.ColliderManager.Update(gameTime);
-            Globals.BoardManager.Update(gameTime);
+            //Globals.BoardManager.Update(gameTime);
 
             _gun.Update(gameTime);
 
@@ -123,16 +135,35 @@ namespace Colozak.States
                 }
             }
 
-            if (Globals.BoardManager.CheckWin())
-                _game.Exit();
+            if (Globals.BoardManager.CheckWin()){
+                 _showWinMenu = true;
+                //_game.ChangeState(new GameWinState(_game, _graphicsDevice, _content));
+                //_bkgsInstance.Stop();
+                Globals.BoardManager.Update(gameTime);
+            }
+            if (Globals.BoardManager.CheckLose()){
 
-            if (Globals.BoardManager.CheckLose())
-                _game.Exit();
+                _showLoseMenu = true;
+                //_game.ChangeState(new GameLoseState(_game, _graphicsDevice, _content));
+                //_bkgsInstance.Stop();
+                Globals.BoardManager.Update(gameTime);
+                
+            }
+               
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
+                    
+            if (_showLoseMenu == true){
+                _game.ChangeState(new GameLoseState(_game, _graphicsDevice, _content));
+                _bkgsInstance.Stop();
+            }
 
+            if(_showWinMenu == true){
+                _game.ChangeState(new GameWinState(_game, _graphicsDevice, _content));
+                _bkgsInstance.Stop();
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -140,38 +171,6 @@ namespace Colozak.States
             _graphicsDevice.Clear(Color.DarkViolet);
 
             spriteBatch.Begin();
-
-            // Draw play area
-            // for (int i = 0; i < 12; i++)
-            // {
-            //     for (int j = 0; j < 8; j++)
-            //     {
-            //         if ((i+j) % 2 == 0)
-            //             spriteBatch.Draw(
-            //                 _rect, 
-            //                 new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)), 
-            //                 null, 
-            //                 Color.Black, 
-            //                 0f, 
-            //                 Vector2.Zero, 
-            //                 1f, 
-            //                 SpriteEffects.None, 
-            //                 0f
-            //             );
-            //         else
-            //             spriteBatch.Draw(
-            //                 _rect,
-            //                 new Vector2((Globals.TILE_SIZE*j) + (Globals.TILE_SIZE*6), (Globals.TILE_SIZE*i) + (Globals.TILE_SIZE*2)),
-            //                 null,
-            //                 Color.AliceBlue,
-            //                 0f,
-            //                 Vector2.Zero,
-            //                 1f,
-            //                 SpriteEffects.None,
-            //                 0f
-            //             );
-            //     }
-            // }
 
             // Draw background
             spriteBatch.Draw(_bg, Vector2.Zero, Color.White);

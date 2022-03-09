@@ -21,6 +21,15 @@ namespace Colozak.Entities
             for (int i = 0; i < Globals.MAX_ACTIVE_COCOONS; i++)
                 ActiveCocoons[i] = null;
         }
+        
+        public void Reset()
+        {
+            CocoonsTexture = new Texture2D[Globals.NUM_COCOONS];
+            ActiveCocoons = new Cocoon[Globals.MAX_ACTIVE_COCOONS];
+            LastCocoonIndex = 0;
+            ToDestroyCocoons.Clear();
+            ToKeepCocoons.Clear();
+        }
 
         public void Update(GameTime gameTime) { }
 

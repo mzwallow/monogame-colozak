@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Colozak.Controls;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Colozak.States
 {
@@ -13,49 +15,48 @@ namespace Colozak.States
 
         private Texture2D _bg;
 
+        private SoundEffect _bgm;
+        private SoundEffectInstance _bgmInstance;
+
         public GameWinState(Colozak game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
         {
+            //rectangle button
             var buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            var buttonFont = _content.Load<SpriteFont>("Fonts/Font");
-            _bg = _content.Load<Texture2D>("BG/bg");
+            //font text
+            var buttonFont = _content.Load<SpriteFont>("Fonts/Text");
+            //picture bg win
+            _bg = _content.Load<Texture2D>("BG/win");
+            //song
+            _bgm = _content.Load<SoundEffect>("Sound/BackgroundMusic");
+            _bgmInstance = _bgm.CreateInstance();
+            _bgmInstance.IsLooped = true;
+            _bgmInstance.Play();
+            _bgmInstance.Volume = 0.3f;
 
-            var newGameButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 - 90),
-                Text = "Start",
-            };
-
-            newGameButton.Click += NewGameButton_Click;
-
-            var OptionButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 - 20),
-                Text = "Option",
-            };
-
-            OptionButton.Click += OptionButton_Click;
-
+            //position quit game button
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 + 50),
+                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - buttonTexture.Width / 2, Globals.SCREEN_HEIGHT / 2 + (buttonTexture.Height / 2)),
                 Text = "Quit Game",
             };
 
+            //call function quitgamebutton_Click
             quitGameButton.Click += QuitGameButton_Click;
 
+            //position Menu button
             var backButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - 80, Globals.SCREEN_HEIGHT / 2 + 120),
-                Text = "Back To Menu",
+                Position = new Vector2(Globals.SCREEN_WIDTH / 2 - buttonTexture.Width / 2, Globals.SCREEN_HEIGHT / 2 - (buttonTexture.Height / 2 + 40)),
+                Text = "Menu",
             };
-            //quitGameButton.Click += QuitGameButton_Click;
+
+            //call function backButton_click
             backButton.Click += backButton_Click;
 
+            //keep object in list
             _components = new List<Component>()
             {
-              newGameButton,
-              OptionButton,
               quitGameButton,
               backButton
             };
@@ -67,20 +68,8 @@ namespace Colozak.States
             spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
-
-
-
+                
             spriteBatch.End();
-        }
-
-        private void NewGameButton_Click(object sender, EventArgs e)
-        {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
-        }
-        private void OptionButton_Click(object sender, EventArgs e)
-        {
-            // Console.WriteLine("Test");
-            _game.ChangeState(new OptionState(_game, _graphicsDevice, _content));
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -94,13 +83,26 @@ namespace Colozak.States
                 component.Update(gameTime);
         }
 
+        ///<summary>
+        ///reset game and back to menu screen
+        ///</summary>
         private void backButton_Click(object sender, EventArgs e)
-        {
-            // Back To Menu
+        {   
+            Globals.IsShooting = false;
+            Globals.Timer = 0f;
+            Globals.CeilingCanDrop = false;
+            Globals.BoardManager.Reset();
+            Globals.CocoonManager.Reset();
+            _bgmInstance.Stop();
+            
+            
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-            Console.WriteLine("Menu");
+            
         }
 
+        ///<summary>
+        ///quit game
+        ///</summary>
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
             _game.Exit();
