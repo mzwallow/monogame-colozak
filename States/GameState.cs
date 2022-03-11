@@ -17,8 +17,6 @@ namespace Colozak.States
 
         private bool _showLoseMenu, _showWinMenu;
 
-
-
         private SpriteFont _font;
         private Texture2D _gunTexture, _wallTexture, _ceilingTexture, _frameTexture, _bg, _loseLineTexture;
 
@@ -153,7 +151,6 @@ namespace Colozak.States
                 _showLoseMenu = true;
                 Globals.BoardManager.Update(gameTime);
             }
-
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -200,11 +197,6 @@ namespace Colozak.States
 
                 c.Draw(spriteBatch);
             }
-
-            // Debug
-            spriteBatch.DrawString(_font, "Gun is shooting: " + Globals.IsShooting, new Vector2(10, 10), Color.Blue);
-            spriteBatch.DrawString(_font, "X: " + Globals.CurrentMouseState.X + " Y: " + Globals.CurrentMouseState.Y, new Vector2(10, 30), Color.Green);
-            spriteBatch.DrawString(_font, "Last cocoon: " + Globals.CocoonManager.LastCocoonIndex, new Vector2(10, 50), Color.Blue);
 
             spriteBatch.End();
         }
