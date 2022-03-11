@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Colozak.Entities;
 
@@ -10,11 +11,13 @@ namespace Colozak.States
     public class GameState : State
     {
         private Gun _gun;
-        
-        private SoundEffect _bkgs;
-        private SoundEffectInstance _bkgsInstance;
+
+        private SoundEffect _bkgs, _shootFX, _popFX,_winFX, _loseFX;
+        private SoundEffectInstance _bkgsInstance, _shootInstance, _popInstance, _winInstance,_loseInstance;
 
         private bool _showLoseMenu, _showWinMenu;
+
+
 
         private SpriteFont _font;
         private Texture2D _gunTexture, _wallTexture, _ceilingTexture, _frameTexture, _bg, _loseLineTexture;
@@ -67,9 +70,11 @@ namespace Colozak.States
             _bkgsInstance = _bkgs.CreateInstance();
             _bkgsInstance.IsLooped = true;
             _bkgsInstance.Play();
-            _bkgsInstance.Volume = 0.3f;
+            _bkgsInstance.Volume = Globals.MusicVolume;
             _showLoseMenu = false;
             _showWinMenu = false;
+
+
 
             // Load wall and ceiling textures
             _wallTexture = content.Load<Texture2D>("wall");
@@ -100,10 +105,30 @@ namespace Colozak.States
             _gunTexture = content.Load<Texture2D>("gun");
             _gun = new Gun(_gunTexture);
 
+            // Shooting gun FX
+            _shootFX = _content.Load<SoundEffect>("Sound/Shoot");
+            _shootInstance = _shootFX.CreateInstance();
+            _shootInstance.Volume = Globals.SoundVolume;
+            // Pop FX
+            _popFX = _content.Load<SoundEffect>("Sound/Pop");
+            _popInstance = _popFX.CreateInstance();
+            _popInstance.Volume = Globals.SoundVolume;
+            // Game Lose FX
+            _loseFX = _content.Load<SoundEffect>("Sound/Btoom");
+            _loseInstance = _loseFX.CreateInstance();
+            _loseInstance.Volume = Globals.SoundVolume;
+             // Game Win FX
+            _winFX = _content.Load<SoundEffect>("Sound/Win");
+            _winInstance = _winFX.CreateInstance();
+            _winInstance.Volume = Globals.SoundVolume;
+
+
+
         }
 
         public override void Update(GameTime gameTime)
         {
+            Globals.Pop = false;
             // Globals.CocoonManager.Update(gameTime);
             foreach (Cocoon c in Globals.CocoonManager.ActiveCocoons)
             {
@@ -115,6 +140,12 @@ namespace Colozak.States
             //Globals.BoardManager.Update(gameTime);
 
             _gun.Update(gameTime);
+            //Play SFX
+            if (Globals.Shoot) _shootInstance.Play();
+            if (Globals.Pop) _popInstance.Play();
+
+
+
 
             if (Globals.CeilingCanDrop)
             {
@@ -123,7 +154,7 @@ namespace Colozak.States
 
                 Globals.CeilingCanDrop = false;
             }
-            
+
             if (!Globals.CeilingCanDrop)
             {
                 Globals.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -135,35 +166,39 @@ namespace Colozak.States
                 }
             }
 
-            if (Globals.BoardManager.CheckWin()){
-                 _showWinMenu = true;
-                //_game.ChangeState(new GameWinState(_game, _graphicsDevice, _content));
-                //_bkgsInstance.Stop();
+            if (Globals.BoardManager.CheckWin())
+            {
+                _showWinMenu = true;
                 Globals.BoardManager.Update(gameTime);
             }
-            if (Globals.BoardManager.CheckLose()){
+            if (Globals.BoardManager.CheckLose())
+            {
 
                 _showLoseMenu = true;
-                //_game.ChangeState(new GameLoseState(_game, _graphicsDevice, _content));
-                //_bkgsInstance.Stop();
                 Globals.BoardManager.Update(gameTime);
-                
+
             }
-               
+
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-                    
-            if (_showLoseMenu == true){
+
+
+            if (_showLoseMenu == true)
+            {
+                _loseInstance.Play();
                 _game.ChangeState(new GameLoseState(_game, _graphicsDevice, _content));
                 _bkgsInstance.Stop();
             }
 
-            if(_showWinMenu == true){
+            if (_showWinMenu == true)
+            {
+                _winInstance.Play();
                 _game.ChangeState(new GameWinState(_game, _graphicsDevice, _content));
                 _bkgsInstance.Stop();
             }
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -197,7 +232,7 @@ namespace Colozak.States
             // Debug
             spriteBatch.DrawString(_font, "Gun is shooting: " + Globals.IsShooting, new Vector2(10, 10), Color.Blue);
             spriteBatch.DrawString(_font, "X: " + Globals.CurrentMouseState.X + " Y: " + Globals.CurrentMouseState.Y, new Vector2(10, 30), Color.Green);
-            spriteBatch.DrawString(_font, "Last cocoon: " + Globals.CocoonManager.LastCocoonIndex,  new Vector2(10, 50), Color.Blue);
+            spriteBatch.DrawString(_font, "Last cocoon: " + Globals.CocoonManager.LastCocoonIndex, new Vector2(10, 50), Color.Blue);
 
             spriteBatch.End();
         }

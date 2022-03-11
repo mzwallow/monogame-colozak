@@ -15,8 +15,9 @@ namespace Colozak.States
 
         private Texture2D _bg;
 
-        private SoundEffect _bgm;
-        private SoundEffectInstance _bgmInstance;
+        private SoundEffect _bgm, _clickFX;
+        private SoundEffectInstance _bgmInstance, _clickInstance;
+
 
         public GameWinState(Colozak game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
@@ -32,7 +33,12 @@ namespace Colozak.States
             _bgmInstance = _bgm.CreateInstance();
             _bgmInstance.IsLooped = true;
             _bgmInstance.Play();
-            _bgmInstance.Volume = 0.3f;
+            _bgmInstance.Volume = Globals.MusicVolume;
+            //SoundFX
+            _clickFX = _content.Load<SoundEffect>("Sound/Click");
+            _clickInstance = _clickFX.CreateInstance();
+            _clickInstance.Volume = Globals.SoundVolume;
+
 
             //position quit game button
             var quitGameButton = new Button(buttonTexture, buttonFont)
@@ -68,13 +74,12 @@ namespace Colozak.States
             spriteBatch.Draw(_bg, Vector2.Zero, Color.White);
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
-                
+
             spriteBatch.End();
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-            // remove sprites if they're not needed
         }
 
         public override void Update(GameTime gameTime)
@@ -87,17 +92,18 @@ namespace Colozak.States
         ///reset game and back to menu screen
         ///</summary>
         private void backButton_Click(object sender, EventArgs e)
-        {   
+        {
             Globals.IsShooting = false;
             Globals.Timer = 0f;
             Globals.CeilingCanDrop = false;
             Globals.BoardManager.Reset();
             Globals.CocoonManager.Reset();
             _bgmInstance.Stop();
-            
-            
+            _clickInstance.Play();
+
+
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-            
+
         }
 
         ///<summary>

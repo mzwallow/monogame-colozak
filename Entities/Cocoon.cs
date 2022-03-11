@@ -44,8 +44,10 @@ namespace Colozak.Entities
         /// </summary>
         public Cocoon(Texture2D texture, Vector2 position)
         {
+
             Texture = texture;
             Position = position;
+
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace Colozak.Entities
             Rectangle _wallRightCollisionBox = Globals.ColliderManager.WallRight.CollisionBox;
             Rectangle _ceilingCollisionBox = Globals.ColliderManager.Ceiling.CollisionBox;
             Rectangle _loseLineCollisionBox = Globals.ColliderManager.LoseLine.CollisionBox;
-                
+
             // Check if hit wall then change shooting cocoon's direction
             if (_cocoonCollisionBox.Intersects(_wallLeftCollisionBox) || _cocoonCollisionBox.Intersects(_wallRightCollisionBox))
                 _rotation *= -1;
@@ -105,12 +107,15 @@ namespace Colozak.Entities
             // Check if hit ceiling or other cocoons
             foreach (Cocoon c in Globals.CocoonManager.ActiveCocoons)
             {
+                Globals.Pop = false;
+
                 if (c != null && !c.IsMoving && (_cocoonCollisionBox.Intersects(c.CollisionBox) || _cocoonCollisionBox.Intersects(_ceilingCollisionBox)))
                 {
                     Globals.CocoonManager.SetCocoonPosition(this);
                     Globals.CocoonManager.ToDestroyCocoons.Add(this);
                     this.IsChecked = true;
                     Globals.CocoonManager.CheckCocoon(this);
+
 
                     // When have matched color cocoons greater or equal than 3, destroyed them
                     if (Globals.CocoonManager.ToDestroyCocoons.Count >= 3)
@@ -120,6 +125,7 @@ namespace Colozak.Entities
                             _c.ToDestroy = true;
                             Globals.BoardManager.Grids[_c.BoardIndex].IsEmpty = true;
                         }
+                        Globals.Pop = true;
                     }
 
                     for (int i = 0; i < Globals.CocoonManager.LastCocoonIndex; i++)
@@ -136,6 +142,7 @@ namespace Colozak.Entities
 
                     Globals.CocoonManager.ToDestroyCocoons.Clear();
 
+
                     // Check for dangling cocoon
                     if (!IsCheckedDown)
                     {
@@ -148,7 +155,7 @@ namespace Colozak.Entities
                             if (_c.BoardIndex < 8)
                                 Globals.CocoonManager.ToKeepCocoons.Add(_c);
                         }
-                        
+
                         // Keep cocoons that have been checked
                         foreach (Cocoon _c in Globals.CocoonManager.ToKeepCocoons)
                         {
@@ -190,6 +197,7 @@ namespace Colozak.Entities
                     return;
                 }
             }
+
         }
     }
 }

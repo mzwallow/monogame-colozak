@@ -15,9 +15,8 @@ namespace Colozak.States
         
         private Texture2D _bg;
 
-        private SoundEffect _bgm;
-
-        private SoundEffectInstance _bgmInstance;
+        private SoundEffect _bgm,_clickFX;
+        private SoundEffectInstance _bgmInstance,_clickInstance;
 
         public GameLoseState(Colozak game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
@@ -33,7 +32,13 @@ namespace Colozak.States
             _bgmInstance = _bgm.CreateInstance();
             _bgmInstance.IsLooped = true;
             _bgmInstance.Play();
-            _bgmInstance.Volume = 0.3f;
+            _bgmInstance.Volume = Globals.MusicVolume;
+            //SoundFX
+            _clickFX = _content.Load<SoundEffect>("Sound/Click");
+            _clickInstance = _clickFX.CreateInstance();
+           _clickInstance.Volume = Globals.SoundVolume;
+
+            
 
 
             ///position Menu button
@@ -86,6 +91,7 @@ namespace Colozak.States
             Globals.CeilingCanDrop = false;
             Globals.BoardManager.Reset();
             Globals.CocoonManager.Reset();
+            _clickInstance.Play();
             _bgmInstance.Stop();
             // Back To Menu
             _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
@@ -97,12 +103,12 @@ namespace Colozak.States
         ///</summary>
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
+            _clickInstance.Play();
             _game.Exit();
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-            // remove sprites if they're not needed
         }
 
         public override void Update(GameTime gameTime)

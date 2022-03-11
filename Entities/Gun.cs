@@ -27,23 +27,25 @@ namespace Colozak.Entities
             _cocoonTexture = GetRandomTexture();
 
             Globals.IsShooting = false;
+            
         }
 
         public void Update(GameTime gameTime)
-        {
+        {Globals.Shoot = false;
             if (Globals.CurrentMouseState.Y <= 576)
             {
                 _rotation = (float)Math.Atan2(
                     Globals.CurrentMouseState.Y - _position.Y,
                     Globals.CurrentMouseState.X - _position.X
-                )  + (float)(Math.PI * 0.5f);
+                ) + (float)(Math.PI * 0.5f);
 
-                if (!Globals.IsShooting && 
+                if (!Globals.IsShooting &&
                     !Globals.CeilingCanDrop &&
                     Globals.CurrentMouseState.LeftButton == ButtonState.Pressed &&
                     Globals.PreviousMouseState.LeftButton == ButtonState.Released)
                 {
                     Globals.IsShooting = true;
+                    Globals.Shoot = true;
 
                     Globals.CocoonManager.AddCocoonToGun(_cocoonTexture, _position, _rotation);
                     _cocoonTexture = GetRandomTexture();
@@ -84,7 +86,7 @@ namespace Colozak.Entities
                         found = true;
                 }
             }
-            
+
             return Globals.CocoonManager.CocoonsTexture[_rand];
         }
     }

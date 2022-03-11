@@ -7,6 +7,7 @@ namespace Colozak.Entities
 {
     public class CocoonManager : IGameEntity
     {
+
         public Texture2D[] CocoonsTexture = new Texture2D[Globals.NUM_COCOONS];
         public Cocoon[] ActiveCocoons = new Cocoon[Globals.MAX_ACTIVE_COCOONS];
         public int LastCocoonIndex = 0;
@@ -21,7 +22,7 @@ namespace Colozak.Entities
             for (int i = 0; i < Globals.MAX_ACTIVE_COCOONS; i++)
                 ActiveCocoons[i] = null;
         }
-        
+
         public void Reset()
         {
             CocoonsTexture = new Texture2D[Globals.NUM_COCOONS];
@@ -64,7 +65,7 @@ namespace Colozak.Entities
             {
                 if (c == null)
                     continue;
-                
+
                 c.Position = Globals.BoardManager.Grids[c.BoardIndex].Position;
             }
         }
@@ -107,7 +108,7 @@ namespace Colozak.Entities
             {
                 if (c == null)
                     continue;
-                
+
                 if (Vector2.Distance(c.Position, cocoon.Position) <= Globals.TILE_SIZE + 2 &&
                     c.Texture == cocoon.Texture &&
                     !c.IsChecked)
@@ -128,7 +129,7 @@ namespace Colozak.Entities
             {
                 if (c == null)
                     continue;
-                
+
                 if (Vector2.Distance(c.Position, cocoon.Position) <= Globals.TILE_SIZE + 2 &&
                     !c.IsChecked)
                 {
