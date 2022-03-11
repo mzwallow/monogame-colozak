@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using Colozak.Entities;
+using Colozak.States;
 
 namespace Colozak
 {
@@ -8,6 +11,13 @@ namespace Colozak
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private State _currentState, _nextState;
+
+        public void ChangeState(State state)
+        {
+            _nextState = state;
+        }
 
         public Colozak()
         {
@@ -18,7 +28,12 @@ namespace Colozak
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _graphics.PreferredBackBufferWidth = Globals.SCREEN_WIDTH;
+            _graphics.PreferredBackBufferHeight = Globals.SCREEN_HEIGHT;
+            _graphics.ApplyChanges();
+
+            Globals.BoardManager = new Board();
+            Globals.CocoonManager = new CocoonManager();
 
             base.Initialize();
         }
@@ -26,16 +41,26 @@ namespace Colozak
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            
+            _currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
         }
 
         protected override void Update(GameTime gameTime)
+
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            Globals.PreviousMouseState = Globals.CurrentMouseState;
+            Globals.CurrentMouseState = Mouse.GetState();
+
+            if (_nextState != null)
+            {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+            _currentState.Update(gameTime);
+            _currentState.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
@@ -44,7 +69,7 @@ namespace Colozak
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _currentState.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);
         }
