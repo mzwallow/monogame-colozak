@@ -11,10 +11,6 @@ namespace Colozak.Entities
         private const int GUN_POS_X = 480;
         private const int GUN_POS_Y = 600;
 
-        // public GunState CurrentState;
-
-        // private int _rand;
-
         private Texture2D _texture, _cocoonTexture;
         private Vector2 _position;
         private float _rotation;
@@ -27,11 +23,14 @@ namespace Colozak.Entities
             _cocoonTexture = GetRandomTexture();
 
             Globals.IsShooting = false;
-            
+
         }
 
         public void Update(GameTime gameTime)
-        {Globals.Shoot = false;
+        {
+            Globals.ShootSFX = false;
+
+            // Set gun's max angle
             if (Globals.CurrentMouseState.Y <= 576)
             {
                 _rotation = (float)Math.Atan2(
@@ -45,7 +44,7 @@ namespace Colozak.Entities
                     Globals.PreviousMouseState.LeftButton == ButtonState.Released)
                 {
                     Globals.IsShooting = true;
-                    Globals.Shoot = true;
+                    Globals.ShootSFX = true;
 
                     Globals.CocoonManager.AddCocoonToGun(_cocoonTexture, _position, _rotation);
                     _cocoonTexture = GetRandomTexture();
@@ -71,6 +70,7 @@ namespace Colozak.Entities
                 spriteBatch.Draw(_cocoonTexture, new Vector2(456, 576), Color.White);
         }
 
+        // Generate random cocoon color in active cocoon list
         public Texture2D GetRandomTexture()
         {
             bool found = false;
@@ -82,7 +82,8 @@ namespace Colozak.Entities
                 {
                     if (Globals.CocoonManager.ActiveCocoons[i] == null)
                         continue;
-                    else if (Globals.CocoonManager.CocoonsTexture[_rand] == Globals.CocoonManager.ActiveCocoons[i].Texture)
+
+                    if (Globals.CocoonManager.CocoonsTexture[_rand] == Globals.CocoonManager.ActiveCocoons[i].Texture)
                         found = true;
                 }
             }

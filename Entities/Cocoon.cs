@@ -107,7 +107,7 @@ namespace Colozak.Entities
             // Check if hit ceiling or other cocoons
             foreach (Cocoon c in Globals.CocoonManager.ActiveCocoons)
             {
-                Globals.Pop = false;
+                Globals.PopSFX = false;
 
                 if (c != null && !c.IsMoving && (_cocoonCollisionBox.Intersects(c.CollisionBox) || _cocoonCollisionBox.Intersects(_ceilingCollisionBox)))
                 {
@@ -125,7 +125,7 @@ namespace Colozak.Entities
                             _c.ToDestroy = true;
                             Globals.BoardManager.Grids[_c.BoardIndex].IsEmpty = true;
                         }
-                        Globals.Pop = true;
+                        Globals.PopSFX = true;
                     }
 
                     for (int i = 0; i < Globals.CocoonManager.LastCocoonIndex; i++)

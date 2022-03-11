@@ -137,11 +137,11 @@ namespace Colozak.States
                 //Music Option
                 spriteBatch.DrawString(_textFont, "MUSIC", new Vector2((Globals.SCREEN_WIDTH / 2) - _textFont.MeasureString("MUSIC").X / 2, 240), Color.DarkGray);
                 spriteBatch.Draw(_volumeRect, new Rectangle(Globals.SCREEN_WIDTH / 2 - 480 / 2, Globals.SCREEN_HEIGHT / 2 - 20, 480, 10), Color.White);
-                spriteBatch.Draw(_volumeRect, new Rectangle(Globals.MusicX, Globals.SCREEN_HEIGHT / 2 - (15 + 13), 20, 26), Color.Silver);
+                spriteBatch.Draw(_volumeRect, new Rectangle(Globals.MUSIC_POS_X, Globals.SCREEN_HEIGHT / 2 - (15 + 13), 20, 26), Color.Silver);
                 //SoundRffect Option
                 spriteBatch.DrawString(_textFont, "SOUNDTRACK", new Vector2((Globals.SCREEN_WIDTH / 2) - _textFont.MeasureString("SOUNDTRACK").X / 2, Globals.SCREEN_HEIGHT / 2 + 30), Color.DarkGray);
                 spriteBatch.Draw(_volumeRect, new Rectangle(Globals.SCREEN_WIDTH / 2 - 480 / 2, Globals.SCREEN_HEIGHT / 2 + 130, 480, 10), Color.White);
-                spriteBatch.Draw(_volumeRect, new Rectangle(Globals.SoundX, Globals.SCREEN_HEIGHT / 2 + (110 + 13), 20, 26), Color.Silver);
+                spriteBatch.Draw(_volumeRect, new Rectangle(Globals.SOUND_POS_X, Globals.SCREEN_HEIGHT / 2 + (110 + 13), 20, 26), Color.Silver);
 
             }
             spriteBatch.End();
@@ -170,7 +170,7 @@ namespace Colozak.States
                     Globals.CurrentMouseState.X < Globals.SCREEN_WIDTH / 2 + _volumeBar.Width / 2 && Globals.CurrentMouseState.Y < 370 && Globals.CurrentMouseState.Y > 310)
                     {
                         //Adjust Music Volume
-                        Globals.MusicX = Globals.CurrentMouseState.X;
+                        Globals.MUSIC_POS_X = Globals.CurrentMouseState.X;
                         _volumeAdjust = ((Globals.CurrentMouseState.X / 48f) - 5) * 0.1f;
                         if (_volumeAdjust < 0.0001f) Globals.MusicVolume = 0f;
                         else
@@ -181,7 +181,7 @@ namespace Colozak.States
                     Globals.CurrentMouseState.X < Globals.SCREEN_WIDTH / 2 + _volumeBar.Width / 2 && Globals.CurrentMouseState.Y < 520 && Globals.CurrentMouseState.Y > 460)
                     {
                         //Adjust SoundFX Volume
-                        Globals.SoundX = Globals.CurrentMouseState.X;
+                        Globals.SOUND_POS_X = Globals.CurrentMouseState.X;
                         _volumeAdjust = ((Globals.CurrentMouseState.X / 48f) - 5) * 0.1f;
                         if (_volumeAdjust < 0.0001f) Globals.SoundVolume = 0f;
                         else

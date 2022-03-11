@@ -25,15 +25,15 @@ namespace Colozak
         public static MouseState CurrentMouseState { get; set; }
         public static MouseState PreviousMouseState { get; set; }
 
+        // Music
         public static float MusicVolume { get; set; } = 1f;
         public static float SoundVolume { get; set; } = 1f;
-        public static int MusicX { get; set; } = SCREEN_WIDTH / 2 + 480 / 2;
-        public static int SoundX { get; set; } = SCREEN_WIDTH / 2 + 480 / 2;
+        public static int MUSIC_POS_X { get; set; } = SCREEN_WIDTH / 2 + 480 / 2;
+        public static int SOUND_POS_X { get; set; } = SCREEN_WIDTH / 2 + 480 / 2;
+
         //Trigger SFX
-        public static bool Pop { get; set; } = false;
-        public static bool Shoot { get; set; } = false;
-
-
+        public static bool PopSFX { get; set; } = false;
+        public static bool ShootSFX { get; set; } = false;
 
         // Manager
         public static Board BoardManager;
